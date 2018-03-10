@@ -123,9 +123,13 @@
 \def\@mtsubmissionyear{\textbf{!INSERT YEAR!}}
 \def\@mtdegree{\textbf{!INSERT DEGREE!}}
 
+% Added because faculty like faculty of science need to put department on the first page
+\def\@mtdepartment{}
+
 \newcommand{\faculty}[1]{\def\@mtfaculty{#1}}
 \newcommand{\submissionyear}[1]{\def\@mtsubmissionyear{#1}}
 \newcommand{\degree}[1]{\def\@mtdegree{#1}}
+\newcommand{\department}[1]{\def\@mtdepartment{#1}}
 
 \def\mastercoursework{1}
 \def\mastermixedmode{2}
@@ -284,6 +288,12 @@
 }
 
 \newcommand\faculty@block{%
+  \ifx \@mtdepartment \empty
+
+  \else
+     \MakeUppercase{\@mtdepartment}\\
+  \fi
+
   \MakeUppercase{\@mtfaculty}\\
   UNIVERSITY OF MALAYA\\
   KUALA LUMPUR%
