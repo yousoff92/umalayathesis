@@ -1,9 +1,54 @@
 %!TEX ROOT = thesis.tex
 \chapter{Dummy Chapter}
 
-Hello!!\index{furball}
+\section{Section 1} \label{chap-dummy-section-1}
 
-\begin{figure}[hbt!]
-\centering Test 3
-\caption{Let's see. What have we got here?}
+\lipsum[1]. Refer to Figure \ref{fig-sample-image}. Refer to Table \ref{table-sample-table}.
+
+\begin{figure}[ht!]\centering
+\includegraphics{asset/green}
+\caption{Short caption}
+\label{fig-sample-image}
 \end{figure}
+
+\begin{figure}[ht!]\centering
+Test 3
+\caption{Long caption. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et}
+\end{figure}
+
+\begin{figure}[!ht]\centering
+	\centering
+	\subbottom[Subfigure 1]{%
+		\includegraphics[width=5cm]{asset/green}}
+	\subbottom[Subfigure 2]{%
+		\includegraphics[width=5cm]{asset/green}}
+	\caption{Multiple figure} 
+	\label{fig-sample-image-2}
+\end{figure} 
+
+\begin{table}[!ht] \centering
+	\caption{Short caption.}
+	\begin{tabular}{|l|l|l|} \hline
+		\textbf{Header 1} & \textbf{Header 2} & \textbf{Header 3} \\
+		Row 1 & Row 2 & Row 3 \\ \hline
+		Row 1 & Row 2 & Row 3 \\ \hline
+		Row 1 & Row 2 & Row 3 \\ \hline
+	\end{tabular}
+	\label{table-sample-table}
+\end{table}
+
+\begin{table}[!ht] \centering
+	\caption{Long caption. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et}
+	\begin{tabular}{|l|l|l|} \hline
+		\textbf{Header 1} & \textbf{Header 2} & \textbf{Header 3} \\
+		Row 1 & Row 2 & Row 3 \\ \hline
+		Row 1 & Row 2 & Row 3 \\ \hline
+		Row 1 & Row 2 & Row 3 \\ \hline
+	\end{tabular}
+	\label{table-sample-table-2}
+\end{table}
+
+\section{Section 2}
+
+\lipsum[1]. Refer to Section \ref{chap-dummy-section-1}. Always use shortcite \shortcite{audibert:2004}
+

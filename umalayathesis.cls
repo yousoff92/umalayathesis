@@ -1,5 +1,5 @@
 %%
-%% umalayathesis.cls 2017/12/27 version V1.4
+%% umalayathesis.cls 2018/09/18 version V1.4.1
 %%
 %% This is the unofficial UM thesis LaTeX class for postgraduate research
 %% students of Universiti Malaya, Malaysia, formatted according to the
@@ -15,7 +15,9 @@
 %%
 %% Copyright (c) 2011-2016 by Lim Lian Tze
 %%
-%% Current maintainer: Lim Lian Tze (liantze@gmail.com)
+%% Current maintainer: 
+%% Lim Lian Tze (liantze@gmail.com) - master branch
+%% Yousoff (yousoff92@gmail.com) - faculty of science branch
 %
 %  BRIEF CHANGELOG
 %  ===============
@@ -80,6 +82,9 @@
 % v1.4  December 29 2017
 %     - Fixed typo matrix -> matric
 %     - In ToC etc all long titles are now double-spaced
+% v1.4.1 - September 18 2018
+%     - Updated to follow Faculty of Science recommendation
+% 
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{umalayathesis}
@@ -96,7 +101,8 @@
 \DeclareOption{malay}{\@englishthesisfalse}
 \DeclareOption{bahasam}{\@englishthesisfalse}
 
-\newif\if@apacitethesis\@apacitethesisfalse
+% Sept 18, 2018 : Yousoff : Fac science will use apacite
+\newif\if@apacitethesis\@apacitethesistrue
 \newif\if@newapathesis\@newapathesisfalse
 \DeclareOption{apacite}{\@apacitethesistrue\@newapathesisfalse}
 \DeclareOption{newapa}{\@apacitethesisfalse\@newapathesistrue}
@@ -117,15 +123,22 @@
   \RequirePackage[main=bahasam,english]{babel}
 \fi
 
+% Sept 18, 2018 : Yousoff - Added mtitle for title in Bahasa Melayu
 \def\theauthor{\textbf{!INSERT AUTHOR!}}
 \def\thetitle{\textbf{!INSERT TITLE!}}
+\def\@mtmtitle{\textbf{!INSERT TITLE!}}
 \def\@mtfaculty{\textbf{!INSERT FACULTY!}}
 \def\@mtsubmissionyear{\textbf{!INSERT YEAR!}}
 \def\@mtdegree{\textbf{!INSERT DEGREE!}}
 
+% Sept 18, 2018 : Yousoff - Faculty require department name
+\def\@mtdepartment{}
+
 \newcommand{\faculty}[1]{\def\@mtfaculty{#1}}
 \newcommand{\submissionyear}[1]{\def\@mtsubmissionyear{#1}}
 \newcommand{\degree}[1]{\def\@mtdegree{#1}}
+\newcommand{\department}[1]{\def\@mtdepartment{#1}}
+\newcommand{\mtitle}[1]{\def\@mtmtitle{#1}}
 
 \def\mastercoursework{1}
 \def\mastermixedmode{2}
@@ -143,12 +156,14 @@
 % Running footers are 10mm from bottom edge of paper
 % i.e. (20 - 10)mm = 10mm from bottom edge of typeblock.
 % Page number at right hand side of page
+
+% Sept 18, 2018 : Yousoff - Lower down page number a bit
 %%%%%%%%%%%%
 \settrimmedsize{297mm}{210mm}{*}
 \setlrmarginsandblock{40mm}{20mm}{*}
 \setulmarginsandblock{20mm}{20mm+1.25ex}{*}
 \setheadfoot{\baselineskip}{10mm}
-\addtolength\footskip{1.25ex}
+\addtolength\footskip{1.50ex}
 \makeoddfoot{plain}{}{}{\footnotesize\thepage}
 \makeevenfoot{plain}{}{}{\footnotesize\thepage}
 \pagestyle{plain}
@@ -284,6 +299,12 @@
 }
 
 \newcommand\faculty@block{%
+  \ifx \@mtdepartment \empty
+
+  \else
+     \MakeUppercase{\@mtdepartment}\\
+  \fi
+ 
   \MakeUppercase{\@mtfaculty}\\
   UNIVERSITY OF MALAYA\\
   KUALA LUMPUR%
@@ -421,18 +442,19 @@
   \if@englishthesis
     \renewcommand*\abstractname{\MakeUppercase{\thetitle}\par ABSTRACT}
   \else
-    \renewcommand*\abstractname{ABSTRACT}
+    \renewcommand*\abstractname{\MakeUppercase{\thetitle}\par ABSTRACT}
   \fi
   \phantomsection\addcontentsline{toc}{chapter}{Abstract}
   \begin{abstract}\setlength{\parindent}{0pt}\noindent\input{#1}\end{abstract}
 }
 %% October 01, 2015: no longer need to capitalise in ToC
+% Sept 18, 2018 : Yousoff - Added title in Bahasa Melayu in abstract
 \newcommand{\msabstractfromfile}[1]{%
   \clearpage%
   \if@englishthesis
-    \renewcommand*\abstractname{ABSTRAK}
+    \renewcommand*\abstractname{\MakeUppercase{\@mtmtitle}\par ABSTRAK}
   \else
-    \renewcommand*\abstractname{\MakeUppercase{\thetitle}\par ABSTRAK}
+    \renewcommand*\abstractname{\MakeUppercase{\@mtmtitle}\par ABSTRAK}
   \fi
   \phantomsection\addcontentsline{toc}{chapter}{Abstrak}
   \begin{abstract}\otherlanguage{bahasam}\setlength{\parindent}{0pt}\noindent\input{#1}\end{abstract}
@@ -608,7 +630,10 @@
 \renewcommand{\cftfigureleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cfttableleader}{\cftdotfill{\cftdotsep}}
 % \renewcommand{\cftapxleader}{\cftdotfill{\cftdotsep}}
-\setrmarg{3.55em plus 1fil}
+
+% Sept 18, 2018 : Yousoff - Faculty want ToC to be justified ~ roughly 7mm from the right
+\setrmarg{7mm}
+%\setrmarg{3.55em plus 1fil}
 \renewcommand*{\cftchaptername}{\MakeUppercase{\chaptername}\space}
 \renewcommand*{\cftchapteraftersnum}{:\space}
 %\renewcommand*{\cftchapterafterpnum}{\vspace*{4pt}}
@@ -639,15 +664,21 @@
 \renewcommand*\cfttableaftersnum{:\space}
 %\renewcommand*\cftfigureafterpnum{\vskip 3pt}
 %\renewcommand*\cfttableafterpnum{\vskip 3pt}
-\setlength\cftbeforefigureskip{0pt}
-\setlength\cftbeforesubfigureskip{0pt}
+
+% Sept 18, 2018 : Yousoff - Add slight space before figure
+\setlength\cftbeforefigureskip{1em}
+\setlength\cftbeforesubfigureskip{1em}
+
 \renewcommand*\cftsubfigureaftersnum{\space}
 \newlength{\tmplength}
 \settowidth{\tmplength}{\normalfont\cftfigurename}
 \addtolength{\tmplength}{\cftfigurenumwidth}
 \cftsetindents{subfigure}{\tmplength}{1.5em}
-\setlength\cftbeforetableskip{0pt}
-\setlength\cftbeforesubtableskip{0pt}
+
+% Sept 18, 2018 : Yousoff - Add slight space before table
+\setlength\cftbeforetableskip{1em}
+\setlength\cftbeforesubtableskip{1em}
+
 \renewcommand*\cftsubtableaftersnum{\space}
 \settowidth{\tmplength}{\normalfont\cfttablename}
 \addtolength{\tmplength}{\cfttablenumwidth}
@@ -700,17 +731,28 @@
 % - Double spacing between entries
 %%%%%%%%%%%%
 % v1.3: Refactor this to make it easier to switch bibliography styles
+% Sept 18, 2018 : Yousoff - Reference to be a single space
 \if@apacitethesis
+
+   \write16{** hello apacitethesis **}
+
   \RequirePackage[nosectionbib]{apacite}
   \bibliographystyle{apacite}
   %\renewcommand\bibliographytypesize{\footnotesize}
-  \setlength\bibitemsep{2\onelineskip}
+  \setlength\bibitemsep{1\onelineskip}
   % May 16, 2016: explicitly set to 0.5in hang
   \setlength\bibleftmargin{0.5in}
   \setlength\bibindent{-0.5in}
+  
+  % Sept 18, 2018 : Yousoff
+  % Workaround to force authors > 3 to et al. As Faculty said.
+  % I use this method because i already put \cite for all my citation.
+  \let\cite\shortcite
 \fi
 
 \if@newapathesis
+
+  \write16{** hello newapathesis **}
   \RequirePackage{natbib}
   \bibliographystyle{newapa}
 \fi
@@ -751,20 +793,27 @@
 
 \RequirePackage{relsize}
 %% Sept 08, 2015: added "acronym" option
+% Sept 18, 2018 : Yousoff - Acronym to be single space
+% and roughly 4cm for left margin
 \RequirePackage[toc,nonumberlist,shortcuts,translate=false,style=long,acronym]{glossaries}
 \RequirePackage{glossaries-babel}
 %\renewcommand*{\acrnameformat}[2]{#2 (\acronymfont{#1})}
 \renewcommand*{\glsgroupskip}{}
 \setglossarypreamble[acronym]{\renewcommand*{\arraystretch}{1.2}\SingleSpacing}
 \setglossarypreamble{\renewcommand*{\arraystretch}{1.2}\SingleSpacing}
+%\setglossarypreamble{\renewcommand*{\arraystretch}{1.2}\SingleSpacing}
 \makeglossaries
 %\newcommand\listacrname{List of Symbols and Acronyms}
+\setlength\LTleft{-2mm}
+\setlength\LTright{0pt}
+\setlength\glsdescwidth{1\hsize}
 \newcommand\listofacronyms{%
   %% Oct 02: List of acronyms is normalsized and with a colon
   \renewcommand{\glsnamefont}[1]{##1\hfill\space:}%
   \printglossary[type=\acronymtype]%
   \renewcommand{\glsnamefont}[1]{##1}%
 }
+
 % October 01, 2015: No longer need to capitalise front-matter chapter titles
 \addto\captionsenglish{%
   \renewcommand*\abstractname{Abstract}
@@ -787,5 +836,7 @@
 }
 
 %% April 30, 2016: Bold captions
+% Sept 18, 2018 : Yousoff - Caption to be on the left instead of centered
 \captionnamefont{\bfseries\normalsize}
 \captiontitlefont{\bfseries\normalsize}
+\captionstyle{\raggedright}

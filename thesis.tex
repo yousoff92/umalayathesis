@@ -19,6 +19,11 @@
 \usepackage{longtable}
 \usepackage{supertabular}
 
+% Sept 18, 2018 : Yousoff - Faculty require the first page of submission paper if we have published in ISI journal.
+% Change subcaption to normal size
+\usepackage{pdfpages}
+\subcaptionsize{\normalsize}
+
 
 % If your faculty requires captions to be 11pt, and only the Figure X: and Table Y: to be bold:
 % \captionnamefont{\small\bfseries}
@@ -28,16 +33,27 @@
 % \addtocontents{lof}{\noindent\figurename\hfill Description\hfill Page\par}
 % \addtocontents{lot}{\noindent\tablename\hfill Description\hfill Page\par}
 
-
+% Sept 18, 2018 : Yousoff - Faculty require abstract in malay
+% Faculty require department name
 \author{Lim Lian Tze}
-\title{The umalayathesis \LaTeX{} Document Class}
-\faculty{Institute of Postgraduate Studies}
+\title{Research Title in English}
+\mtitle{Research Title in Malay}
+\faculty{Faculty of Science}
 \submissionyear{2017}
-\degree{Doctor of Philosophy}
+\degree{Master of Science}
+\department{Institute Of Mathematical Sciences}
 
 % load acronym definitions from separate file
 \loadglsentries{myacronyms}
+\glsaddall
 %\setlength{\glsdescwidth}{.7\textwidth}
+
+% Sept 18, 2018 : Yousoff - For your references. 2017 guidelines
+%Thesis guideline	http://fs.um.edu.my/docs/librariesprovider3/PDF/mh-15-9-2017-guidelines-for-preparation-of-research-project-dissertation-and-thesis-2017-(1).pdf
+%APA guideline	http://fs.um.edu.my/docs/librariesprovider3/PDF/apa-guide.pdf?sfvrsn=2
+%Word template	https://www.um.edu.my/docs/librariesprovider80/students-current-students-thesis/thesis-amp-dissertation-ms-word-template-2017.docx?sfvrsn=2
+
+
 \begin{document}
 \frontmatter
 
@@ -45,9 +61,9 @@
 %% correct statement on the title page
 % \makecoverandtitlepage{\mastercoursework}
 % \makecoverandtitlepage{\mastermixedmode}
-% \makecoverandtitlepage{\masterresearch}
+\makecoverandtitlepage{\masterresearch}
 % \makecoverandtitlepage{\doctoralcoursework}
-\makecoverandtitlepage{\doctoralresearch}
+% \makecoverandtitlepage{\doctoralresearch}
 % \makecoverandtitlepage{\doctoralmixedmode}
 
 \declarationpage
@@ -55,11 +71,15 @@
 \msabstractfromfile{sample-msabstract}
 \acknowledgements{Thanks guys. I owe you many.}
 
+% Sept 18, 2018 : Yousoff - Faculty require single spacing for all list
 {\clearpage
 \tableofcontents\clearpage
+{
+\SingleSpacing
 \listoffigures\clearpage
 \listoftables\clearpage
 \listofacronyms\clearpage
+}
 \listofappendices\clearpage}
 
 \mainmatter
@@ -70,8 +90,11 @@
 \bibliography{myrefs}
 
 % Make sure you have defined your own papers in the .bib file!
+% Sept 18, 2018 : Remember to bold your name in the generated own.bbl
 \nociteown{Lim:2009}
 \bibliographyown{myrefs}
+
+\includepdf[pages={1},pagecommand={},width=\textwidth]{asset/PDF_FILE.pdf}
 
 \begin{appendices}
 \startapps
