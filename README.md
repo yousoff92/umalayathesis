@@ -61,23 +61,14 @@ This thesis template has been changed according to these guidelines
 Changelog :
 
 - Added department name for the front page.
-
 - Added Bahasa Melayu title for abstract page.
-
 - Single-spacing for list of table/figures. For now, please refrain from using long title for Table of Content/Appendix. 
-
 - List of table/figures/toc name to be justified.
-
 - As per recommendation by Faculty, the captions will be left justified.
-
 - Single-spacing for reference.
-
 - Added the first page of paper publication, if any.
-
 - List of symbols/abbreviation left-margin to be 4cm.
-
 - Lowered down page number to approximately 1cm.
-
 - Fix citation for > 3 authors.
 
   
